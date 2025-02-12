@@ -29,13 +29,13 @@ echo -e "\nWinner of the 2018 tournament team name:"
 echo "$($PSQL "select teams.name from teams left join games on teams.team_id = games.winner_id where games.year = 2018 and round='Final';")"
 
 echo -e "\nList of teams who played in the 2014 'Eighth-Final' round:"
-echo "$($PSQL "select teams.name from teams left join games on teams.team_id = games.winner_id or teams.team_id = games.opponent_id where games.year = 2014 and games.round = 'Eighth-Final';")"
+echo "$($PSQL "select teams.name from teams inner join games on teams.team_id = games.winner_id or teams.team_id = games.opponent_id where games.year = 2014 and games.round = 'Eighth-Final' order by teams.name;")"
 
 echo -e "\nList of unique winning team names in the whole data set:"
-echo "$($PSQL "select distinct teams.name from teams left join games on teams.team_id = games.winner_id;")"
+echo "$($PSQL "select distinct teams.name from teams inner join games on teams.team_id = games.winner_id order by teams.name;")"
 
 echo -e "\nYear and team name of all the champions:"
-echo "$($PSQL "select games.year, teams.name from teams inner join games on games.winner_id = teams.team_id and games.round='Final';")"
+echo "$($PSQL "select games.year, teams.name from teams inner join games on games.winner_id = teams.team_id and games.round='Final' order by games.year;")"
 
 echo -e "\nList of teams that start with 'Co':"
-echo "$($PSQL "select * from teams where name like 'Co%';")"
+echo "$($PSQL "select name from teams where name like 'Co%' order by name;")"
